@@ -12,9 +12,15 @@ class BookingController extends Controller
     public function createBooking(Request $request)
     {
         $checkinDate = $request->checkinDate;
-
+        $userID = $request->user;
         $booking = [];
         $status = 400;
+
+        if (!empty($user)) {
+            $user = User::findOrFail($userID);
+            $booking->user = $user;
+        }
+
         if (!empty($checkinDate)) {
             $booking = new Booking();
             $booking->checkinDate = $checkinDate;
