@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->boolean('is_confirmed');
-            $table->date('checkin_date');
+            $table->timestamp('checkin_date');
             $table->bigInteger('user_id')->unsigned()->nullable();
 
             $table->timestamps();

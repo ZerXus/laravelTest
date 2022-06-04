@@ -8,16 +8,6 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'registration']]);
-    }
-
-    /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -36,12 +26,11 @@ class AuthController extends Controller
     /**
      * User registration
      */
-    public function registration()
+    public function register()
     {
         $name = request('name');
         $email = request('email');
         $password = request('password');
-
         $user = new User();
         $user->name = $name;
         $user->email = $email;
@@ -56,7 +45,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
+    public function userProfile()
     {
         return response()->json(auth()->user());
     }

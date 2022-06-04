@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class BookingController extends Controller
 {
@@ -13,7 +15,7 @@ class BookingController extends Controller
     {
         $checkinDate = $request->checkinDate;
         $userID = $request->user;
-        $booking = [];
+        $booking = new Booking();
         $status = 400;
 
         if (!empty($user)) {
@@ -22,10 +24,10 @@ class BookingController extends Controller
         }
 
         if (!empty($checkinDate)) {
-            $booking = new Booking();
-            $booking->checkinDate = $checkinDate;
+            $booking->checkin_date = Carbon::createFromFormat('Y-m-d', $checkinDate);
             $booking->save();
             $status = 200;
+
         }
 
         return response()->json(['booking' => $booking], $status);
@@ -82,7 +84,7 @@ class BookingController extends Controller
     }
 
 
-    private function getList($limit = null, $offset = null, $status = null, $user = null)
+    protected function getList($limit = null, $offset = null, $status = null, $user = null)
     {
         $bookings = Booking::query();
         if (!empty($limit)) {
